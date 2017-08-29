@@ -396,7 +396,7 @@ class MenuController extends Controller
             ], $menuTypeInput);
 
             XeMenu::setMenuItemTheme($item, $desktopTheme, $mobileTheme);
-            $this->permissionRegisterGrant(XeMenu::permKeyString($item), null, $menu->siteKey);
+            $this->permissionRegisterGrant(XeMenu::permKeyString($item), null, $menu->site_key);
 
         } catch (Exception $e) {
             XeDB::rollback();
@@ -524,7 +524,7 @@ class MenuController extends Controller
 
     protected function getItemImageKeyName($name)
     {
-        return $name . 'Id';
+        return snake_case($name . 'Id');
     }
 
     protected function registerItemImage(Request $request, MenuItem $item, $name)

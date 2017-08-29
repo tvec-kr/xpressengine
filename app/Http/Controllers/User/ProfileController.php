@@ -91,7 +91,7 @@ class ProfileController extends Controller
             if ($profileFile = $request->file('profileImgFile')) {
                 /** @var UserImageHandler $imageHandler */
                 $imageHandler = app('xe.user.image');
-                $user->profileImageId = $imageHandler->updateUserProfileImage($user, $profileFile);
+                $user->profile_image_id = $imageHandler->updateUserProfileImage($user, $profileFile);
             }
 
             $this->handler->update($user, compact('displayName', 'introduction'));
@@ -122,7 +122,7 @@ class ProfileController extends Controller
     {
         $user = $this->handler->users()->find($id);
         if ($user === null) {
-            $user = $this->handler->users()->where(['displayName' => $id])->first();
+            $user = $this->handler->users()->where(['display_name' => $id])->first();
         }
 
         if ($user === null) {
