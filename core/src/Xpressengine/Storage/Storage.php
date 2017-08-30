@@ -253,7 +253,7 @@ class Storage
             }
         }
 
-        $file->getConnection()->table($file->getFileableTable())->where('fileId', $file->id)->delete();
+        $file->getConnection()->table($file->getFileableTable())->where('file_id', $file->id)->delete();
         $this->files->delete($file);
 
         return $this->repo->delete($file);
@@ -282,9 +282,9 @@ class Storage
     public function bind($fileableId, File $file)
     {
         $file->getConnection()->table($file->getFileableTable())->insert([
-            'fileId' => $file->getKey(),
-            'fileableId' => $fileableId,
-            'createdAt' => Carbon::now()
+            'file_id' => $file->getKey(),
+            'fileable_id' => $fileableId,
+            'created_at' => Carbon::now()
         ]);
 
         $this->repo->increment($file, 'useCount');
@@ -300,8 +300,8 @@ class Storage
     public function has($fileableId, File $file)
     {
         return $file->getConnection()->table($file->getFileableTable())
-            ->where('fileId', $file->getKey())
-            ->where('fileableId', $fileableId)
+            ->where('file_id', $file->getKey())
+            ->where('fileable_id', $fileableId)
             ->first() === null ? false : true;
     }
 
@@ -316,14 +316,14 @@ class Storage
     public function unBind($fileableId, File $file, $remove = false)
     {
         $file->getConnection()->table($file->getFileableTable())
-            ->where('fileId', $file->getKey())
-            ->where('fileableId', $fileableId)
+            ->where('file_id', $file->getKey())
+            ->where('fileable_id', $fileableId)
             ->delete();
 
-        if ($remove === true && $file->useCount - 1 < 1) {
+        if ($remove === true && $file->use_count - 1 < 1) {
             $this->delete($file);
         } else {
-            $this->repo->decrement($file, 'useCount');
+            $this->repo->decrement($file, 'use_count');
         }
     }
 
