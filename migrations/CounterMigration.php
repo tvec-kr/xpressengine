@@ -29,7 +29,7 @@ class CounterMigration extends Migration {
             $table->timestamp('created_at')->comment('created date');
 
             $table->index(['target_id', 'user_id']);
-            $table->index(['target_id', 'counter_iame']);
+            $table->index(['target_id', 'counter_name']);
         });
 
         \DB::table('config')->insert(['name' => 'counter', 'vars' => '{}']);

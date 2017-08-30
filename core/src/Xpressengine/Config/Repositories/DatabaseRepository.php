@@ -128,7 +128,7 @@ class DatabaseRepository implements ConfigRepository
      */
     public function save(ConfigEntity $config)
     {
-        $exists = $this->find($config->siteKey, $config->name);
+        $exists = $this->find($config->site_key, $config->name);
         if ($exists === null) {
             return $this->insert($config);
         }
@@ -147,7 +147,7 @@ class DatabaseRepository implements ConfigRepository
     public function clearLike(ConfigEntity $config, $excepts = [])
     {
         $query = $this->conn->table($this->table)
-            ->where('site_key', $config->siteKey)
+            ->where('site_key', $config->site_key)
             ->where('name', 'like', $config->name . '%')
             ->where('name', '<>', $config->name);
 
@@ -205,7 +205,7 @@ class DatabaseRepository implements ConfigRepository
 
         if (count($diff) > 0) {
             $this->conn->table($this->table)
-                ->where('site_key', $config->siteKey)
+                ->where('site_key', $config->site_key)
                 ->where('name', $config->name)
                 ->update($diff);
         }
@@ -224,7 +224,7 @@ class DatabaseRepository implements ConfigRepository
     public function foster(ConfigEntity $config, $to = null)
     {
         $query = $this->conn->table($this->table)
-            ->where('site_key', $config->siteKey)
+            ->where('site_key', $config->site_key)
             ->where(function ($query) use ($config) {
                 $query->where('name', $config->name)
                     ->orWhere('name', 'like', $config->name . '.%');
@@ -253,7 +253,7 @@ class DatabaseRepository implements ConfigRepository
     {
         if ($to !== null) {
             $this->conn->table($this->table)
-                ->where('site_key', $config->siteKey)
+                ->where('site_key', $config->site_key)
                 ->where(function ($query) use ($config) {
                     $query->where('name', $config->name)
                         ->orWhere('name', 'like', $config->name . '.%');

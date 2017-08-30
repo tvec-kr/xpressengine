@@ -170,9 +170,9 @@ class MenuMigration extends Migration {
             'activated' => '1',
         ];
         $menuTypeInput = [
-            'page_title' => 'Welcome to XpressEngine3',
+            'pageTitle' => 'Welcome to XpressEngine3',
             'comment' => false,
-            'site_key' => 'default'
+            'siteKey' => 'default'
         ];
 
         $item = $menuHandler->createItem($mainMenu, $inputs, $menuTypeInput);

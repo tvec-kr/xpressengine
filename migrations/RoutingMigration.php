@@ -25,7 +25,7 @@ class RoutingMigration extends Migration {
             $table->string('module')->comment('module ID');
             $table->string('instance_id')->comment('instance ID. menu item ID');
             $table->string('menu_id')->comment('menu ID. menu ID');
-            $table->string('site_iey')->comment('site key. for multi web site support.');
+            $table->string('site_key')->comment('site key. for multi web site support.');
 
             $table->unique('instance_id');
         });

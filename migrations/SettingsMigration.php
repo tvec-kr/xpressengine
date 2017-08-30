@@ -17,8 +17,8 @@ class SettingsMigration extends Migration {
     public function installed()
     {
         \DB::table('config')->insert(['name' => 'settings', 'vars' => '[]']);
-        \DB::table('permissions')->insert(['siteKey'=> 'default', 'name' => 'settings', 'grants' => '[]']);
-        \DB::table('permissions')->insert(['siteKey'=> 'default', 'name' => 'settings.user', 'grants' => '[]']);
+        \DB::table('permissions')->insert(['site_key'=> 'default', 'name' => 'settings', 'grants' => '[]']);
+        \DB::table('permissions')->insert(['site_key'=> 'default', 'name' => 'settings.user', 'grants' => '[]']);
     }
 
     /**

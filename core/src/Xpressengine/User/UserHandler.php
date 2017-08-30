@@ -233,7 +233,7 @@ class UserHandler
         // insert mail, delete pending mail
         if (isset($userData['email'])) {
             $mailData = [
-                'userId' => $user->id,
+                'user_id' => $user->id,
                 'address' => $user->email,
             ];
             $this->emails()->create($user, $mailData);
@@ -271,7 +271,7 @@ class UserHandler
 
     /**
      * 회원정보를 업데이트 한다.
-     * 필드: email, displayName, password, status, introduction, profileImgFile, groupId
+     * 필드: email, display_name, password, status, introduction, profileImgFile, group_id
      *
      * @param UserInterface $user     user
      * @param array         $userData user data
@@ -304,7 +304,7 @@ class UserHandler
         // resolve group
         $groups = array_get($userData, 'groupId');
 
-        // email, displayName, introduction, password, status, rating
+        // email, display_name, introduction, password, status, rating
         $userData = array_except($userData, ['groupId', 'profileImgFile']);
 
         foreach ($userData as $key => $value) {
@@ -366,7 +366,7 @@ class UserHandler
     public function validateForCreate(array $data, $token = null)
     {
         // 필수 요소 검사
-        if (!isset($data['status'], $data['rating'], $data['displayName'])) {
+        if (!isset($data['status'], $data['rating'], $data['display_name'])) {
             throw new InvalidArgumentException();
         }
 
@@ -381,7 +381,7 @@ class UserHandler
         }
 
         // displayName 검사
-        $this->validateDisplayName($data['displayName']);
+        $this->validateDisplayName($data['display_name']);
 
         // account 검사
         if (isset($data['account'])) {
@@ -398,7 +398,7 @@ class UserHandler
     }
 
     /**
-     * 표시이름(displayName)에 대한 유효성 검사를 한다. 표시이름이 형식검사와 중복검사를 병행한다.
+     * 표시이름(display_name)에 대한 유효성 검사를 한다. 표시이름이 형식검사와 중복검사를 병행한다.
      *
      * @param string $name 유효성 검사를 할 표시이름
      *
@@ -421,7 +421,7 @@ class UserHandler
             throw new InvalidDisplayNameException(compact('message'));
         }
 
-        if ($this->users()->where(['displayName' => $name])->first() !== null) {
+        if ($this->users()->where(['display_name' => $name])->first() !== null) {
             throw new DisplayNameAlreadyExistsException();
         }
         return true;
@@ -482,9 +482,9 @@ class UserHandler
             $this->validatePassword($data['password']);
         }
 
-        if (array_get($data, 'displayName') !== null) {
-            if ($user->displayName !== $data['displayName']) {
-                $this->validateDisplayName($data['displayName']);
+        if (array_get($data, 'display_name') !== null) {
+            if ($user->display_name !== $data['display_name']) {
+                $this->validateDisplayName($data['display_name']);
             }
         }
 
