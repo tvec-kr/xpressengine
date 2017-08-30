@@ -255,12 +255,12 @@ class UserHandler
             $account = $this->accounts()->create(
                 $user,
                 [
-                    'userId' => $user->id,
-                    'accountId' => array_get($accountData, 'accountId'),
+                    'user_id' => $user->id,
+                    'account_id' => array_get($accountData, 'accountId'),
                     'email' => array_get($accountData, 'email', array_get($data, 'email')),
                     'provider' => array_get($accountData, 'provider'),
                     'token' => array_get($accountData, 'token'),
-                    'tokenSecret' => array_get($accountData, 'tokenSecret'),
+                    'token_secret' => array_get($accountData, 'tokenSecret'),
                 ]
             );
             $user->accounts()->save($account);
@@ -295,9 +295,9 @@ class UserHandler
 
             if ($profileFile === null) {
                 $this->imageHandler->removeUserProfileImage($user);
-                $userData['profileImageId'] = null;
+                $userData['profile_image_id'] = null;
             } else {
-                $userData['profileImageId'] = $this->imageHandler->updateUserProfileImage($user, $profileFile);
+                $userData['profile_image_id'] = $this->imageHandler->updateUserProfileImage($user, $profileFile);
             }
         }
 
