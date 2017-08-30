@@ -320,7 +320,7 @@ class MenuHandler
                 'module' => $menuTypeObj::getId(),
                 'instanceId' => $item->getKey(),
                 'menuId' => $item->{$item->getAggregatorKeyName()},
-                'siteKey' => $item->menu->siteKey
+                'siteKey' => $item->menu->site_key
             ]);
         }
     }
