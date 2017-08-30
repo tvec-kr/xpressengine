@@ -30,7 +30,7 @@ use Xpressengine\Routing\InstanceRoute;
  * @link      https://xpressengine.io
  *
  * @property string $id          자동 생성된 고유한 식별자
- * @property string $menu_id      소속된 MenuEntity 의 ID
+ * @property string $menu_id     소속된 MenuEntity 의 ID
  * @property string $parent_id    부모의 ID
  * @property string $url         해당 메뉴의 URL
  * @property string $pre_title    UI 에서 출력을 위해서 사용되는 property title 출력전에 추가
