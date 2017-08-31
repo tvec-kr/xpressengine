@@ -209,7 +209,7 @@ class PermissionHandler
      */
     public function move(Permission $permission, $to = null)
     {
-        $toParent = $to !== null ? $this->repo->findByName($permission->siteKey, $to) : null;
+        $toParent = $to !== null ? $this->repo->findByName($permission->site_key, $to) : null;
 
         if (($to !== null && $toParent === null)
             || ($toParent !== null && $permission->type != $toParent->type)) {

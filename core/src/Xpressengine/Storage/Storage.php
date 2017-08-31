@@ -220,7 +220,7 @@ class Storage
             throw new FileDoesNotExistException();
         }
 
-        $file->increment('downloadCount');
+        $file->increment('download_count');
 
         $name = $name ?: $file->clientname;
 
@@ -287,7 +287,7 @@ class Storage
             'created_at' => Carbon::now()
         ]);
 
-        $this->repo->increment($file, 'useCount');
+        $this->repo->increment($file, 'use_count');
     }
 
     /**
