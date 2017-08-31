@@ -172,7 +172,7 @@ class RegisterController extends Controller
 
         $rules = [
             'email' => 'email',
-            'displayName' => 'required',
+            'display_name' => 'required',
             'password' => 'confirmed|password',
             'agree' => 'required|accepted',
             'register_token' => 'required'
@@ -260,7 +260,7 @@ class RegisterController extends Controller
 
         $rules = [
             'email' => 'email',
-            'displayName' => 'required',
+            'display_name' => 'required',
             'password' => 'confirmed|password',
             'agree' => 'required|accepted',
             'register_token' => 'required'

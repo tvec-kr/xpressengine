@@ -145,7 +145,7 @@ class UserController extends Controller
             $request,
             [
                 'email' => 'email|required',
-                'displayName' => 'required',
+                'display_name' => 'required',
                 'password' => 'required|password',
             ]
         );
@@ -311,7 +311,7 @@ class UserController extends Controller
             throw $e;
         }
 
-        $mails = $this->handler->emails()->where(['userId' => $id])->get();
+        $mails = $this->handler->emails()->where(['user_id' => $id])->get();
 
         return XePresenter::makeApi(['mails' => $mails]);
     }

@@ -68,7 +68,7 @@ class ProfileController extends Controller
         $this->validate(
             $request,
             [
-                'displayName' => 'required',
+                'display_name' => 'required',
             ]
         );
 
@@ -77,7 +77,7 @@ class ProfileController extends Controller
         $user = $this->retreiveUser($userId);
         $userId = $user->getId();
 
-        $displayName = $request->get('displayName');
+        $displayName = $request->get('display_name');
         $introduction = $request->get('introduction');
 
         // displayName validation
@@ -94,7 +94,7 @@ class ProfileController extends Controller
                 $user->profile_image_id = $imageHandler->updateUserProfileImage($user, $profileFile);
             }
 
-            $this->handler->update($user, compact('displayName', 'introduction'));
+            $this->handler->update($user, ['display_name' => $displayName, 'introduction' => $introduction]);
 
         } catch (\Exception $e) {
             XeDB::rollback();

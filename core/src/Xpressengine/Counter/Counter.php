@@ -239,7 +239,7 @@ class Counter
             return $this->newModel()->where('target_id', $targetId)->where('ipaddress', $this->request->ip())
                 ->where('counter_name', $this->name)->where('counter_option', $option)->first();
         } else {
-            return $this->newModel()->where('target_id', $targetId)->where('userId', $user->getId())
+            return $this->newModel()->where('target_id', $targetId)->where('user_id', $user->getId())
                 ->where('counter_name', $this->name)->where('counter_option', $option)->first();
         }
     }
@@ -259,7 +259,7 @@ class Counter
             return $this->newModel()->where('target_id', $targetId)->where('ipaddress', $this->request->ip())
                 ->where('counter_name', $this->name)->first();
         } else {
-            return $this->newModel()->where('target_id', $targetId)->where('userId', $user->getId())
+            return $this->newModel()->where('target_id', $targetId)->where('user_id', $user->getId())
                 ->where('counter_name', $this->name)->first();
         }
     }

@@ -226,13 +226,13 @@ abstract class AbstractType implements ComponentInterface
         $this->handler->connection()->getSchemaBuilder()->create(
             $this->handler->getConfigHandler()->getTableName($this->config),
             function (Blueprint $table) use ($column, $self) {
-                $column->add($table, 'dynamic_field_target_');
+                $column->add($table, 'dynamic_field_target');
 
                 /**
                  * @var ColumnEntity $addColumn
                  */
                 foreach ($self->getColumns() as $addColumn) {
-                    $addColumn->add($table, $self->config->get('id') . '_');
+                    $addColumn->add($table, $self->config->get('id'));
                 }
                 $table->primary(array($column->name), 'primaryKey');
             }
@@ -254,8 +254,8 @@ abstract class AbstractType implements ComponentInterface
             $this->handler->connection()->getSchemaBuilder()->create(
                 $this->handler->getConfigHandler()->getRevisionTableName($this->config),
                 function (Blueprint $table) use ($column, $self) {
-                    $table->string('revisionId', 255);
-                    $table->integer('revisionNo')->default(0);
+                    $table->string('revision_id', 255);
+                    $table->integer('revision_no')->default(0);
 
                     $column->add($table);
 
@@ -263,10 +263,10 @@ abstract class AbstractType implements ComponentInterface
                      * @var ColumnEntity $addColumn
                      */
                     foreach ($self->getColumns() as $addColumn) {
-                        $addColumn->add($table, $self->config->get('id') . '_');
+                        $addColumn->add($table, $self->config->get('id'));
                     }
 
-                    $table->primary(array('revisionId'), 'primaryKey');
+                    $table->primary(array('revision_id'), 'primaryKey');
                     $table->index($column->name, $column->name);
                 }
             );
@@ -303,7 +303,7 @@ abstract class AbstractType implements ComponentInterface
                  * @var ColumnEntity $column
                  */
                 foreach ($self->getColumns() as $column) {
-                    $column->add($table, $self->config->get('id') . '_');
+                    $column->add($table, $self->config->get('id'));
                 }
             }
         );
@@ -340,7 +340,7 @@ abstract class AbstractType implements ComponentInterface
                      * @var ColumnEntity $column
                      */
                     foreach ($self->getColumns() as $column) {
-                        $column->add($table, $self->config->get('id') . '_');
+                        $column->add($table, $self->config->get('id'));
                     }
                 }
             );
@@ -415,7 +415,7 @@ abstract class AbstractType implements ComponentInterface
                  * @var ColumnEntity $column
                  */
                 foreach ($self->getColumns() as $column) {
-                    $column->drop($table, $self->config->get('id') . '_');
+                    $column->drop($table, $self->config->get('id'));
                 }
             }
         );
@@ -460,9 +460,9 @@ abstract class AbstractType implements ComponentInterface
         }
 
         $insertParam = [];
-        $insertParam['dynamicFieldTargetId'] = $args[$config->get('joinColumnName')];
+        $insertParam['dynamic_field_target_id'] = $args[$config->get('joinColumnName')];
         foreach ($this->getColumns() as $column) {
-            $key = snake_case($config->get('id') . '_' . $column->name);
+            $key = $config->get('id') . '_' . $column->name;
 
             if (isset($args[$key])) {
                 $insertParam[$key] = $args[$key];
@@ -521,7 +521,7 @@ abstract class AbstractType implements ComponentInterface
         $updateParam = [];
 
         foreach ($this->getColumns() as $column) {
-            $key = snake_case($config->get('id') . '_' . $column->name);
+            $key = $config->get('id') . '_' . $column->name;
 
             if (isset($args[$key])) {
                 $updateParam[$key] = $args[$key];
@@ -635,7 +635,7 @@ abstract class AbstractType implements ComponentInterface
     {
         $config = $this->config;
         foreach ($this->getColumns() as $column) {
-            $key = snake_case($config->get('id') . '_' . $column->name);
+            $key = $config->get('id') . '_' . $column->name;
 
             if (isset($params[$key]) && $params[$key] != '') {
                 $query = $query->where($key, '=', $params[$key]);
@@ -656,7 +656,7 @@ abstract class AbstractType implements ComponentInterface
     {
         $config = $this->config;
         foreach ($this->getColumns() as $column) {
-            $key = snake_case($config->get('id') . '_' . $column->name);
+            $key = $config->get('id') . '_' . $column->name;
 
             if (isset($params[$key])) {
                 $query = $query->orderBy($key, '=', $params[$key]);
@@ -683,7 +683,7 @@ abstract class AbstractType implements ComponentInterface
         $insertParam['revision_id'] = $args['revisionId'];
         $insertParam['revision_no'] = $args['revisionNo'];
         foreach ($this->getColumns() as $column) {
-            $key = snake_case($this->config->get('id') . '_' . $column->name);
+            $key = $this->config->get('id') . '_' . $column->name;
 
             if (isset($args[$key])) {
                 $insertParam[$key] = $args[$key];
