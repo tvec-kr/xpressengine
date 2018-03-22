@@ -36,27 +36,6 @@ class DynamicFieldServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('xe.db.proxy', function ($instance, $app) {
-            $instance->register(new DatabaseProxy($app['xe.dynamicField']));
-        });
-
-        $this->app->resolving('validator', function () {
-            $this->addValidationRule();
-        });
-    }
-
-    private function addValidationRule()
-    {
-        $this->app['validator']->extend('df_id', function ($attribute, $value) {
-            if (! is_string($value) && ! is_numeric($value)) {
-                return false;
-            }
-
-            return preg_match('/^[a-zA-Z]+([a-zA-Z0-9_]+)?[a-zA-Z0-9]+$/', $value) > 0;
-        });
-        $this->app['validator']->replacer('df_id', function ($message, $attribute, $rule, $parameters) {
-            return xe_trans('xe::validation.df_id', ['attribute' => $attribute]);
-        });
     }
 
     /**
@@ -81,6 +60,33 @@ class DynamicFieldServiceProvider extends ServiceProvider
 
         $this->app->singleton('xe.dynamicField.revision', function ($app) {
             return new RevisionManager($app['xe.dynamicField']);
+        });
+
+        $this->resolving();
+    }
+
+    /**
+     * Register resolving callbacks.
+     *
+     * @return void
+     */
+    protected function resolving()
+    {
+        $this->app->resolving('xe.db.proxy', function ($instance, $app) {
+            $instance->register(new DatabaseProxy($app['xe.dynamicField']));
+        });
+
+        $this->app->resolving('validator', function ($instance) {
+            $instance->extend('df_id', function ($attribute, $value) {
+                if (! is_string($value) && ! is_numeric($value)) {
+                    return false;
+                }
+
+                return preg_match('/^[a-zA-Z]+([a-zA-Z0-9_]+)?[a-zA-Z0-9]+$/', $value) > 0;
+            });
+            $instance->replacer('df_id', function ($message, $attribute, $rule, $parameters) {
+                return xe_trans('xe::validation.df_id', ['attribute' => $attribute]);
+            });
         });
     }
 }

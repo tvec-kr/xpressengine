@@ -26,9 +26,6 @@ class SeoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('xe.seo', function () {
-            AbstractImporter::setUrlGenerator($this->app[UrlGenerator::class]);
-        });
     }
 
     /**
@@ -52,5 +49,19 @@ class SeoServiceProvider extends ServiceProvider
             );
         });
         $this->app->alias(SeoHandler::class, 'xe.seo');
+
+        $this->resolving();
+    }
+
+    /**
+     * Register resolving callbacks.
+     *
+     * @return void
+     */
+    protected function resolving()
+    {
+        $this->app->resolving('xe.seo', function () {
+            AbstractImporter::setUrlGenerator($this->app[UrlGenerator::class]);
+        });
     }
 }

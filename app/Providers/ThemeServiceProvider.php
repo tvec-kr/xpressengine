@@ -17,6 +17,18 @@ use Xpressengine\Theme\ThemeHandler;
 class ThemeServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // TODO: move code to valid location!!!
+        // TODO: check permission!!
+        $this->registerInterceptForThemePreview();
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -38,14 +50,17 @@ class ThemeServiceProvider extends ServiceProvider
             return $themeHandler;
         });
         $this->app->alias(ThemeHandler::class, 'xe.theme');
+
+        $this->resolving();
     }
 
-    public function boot()
+    /**
+     * Register resolving callbacks.
+     *
+     * @return void
+     */
+    protected function resolving()
     {
-        // TODO: move code to valid location!!!
-        // TODO: check permission!!
-        $this->registerInterceptForThemePreview();
-
         $this->app->resolving('xe.theme', function () {
             $this->registerMobileResolver();
             $this->setThemeHandlerForTheme();

@@ -16,27 +16,25 @@ class EditorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('xe.editor', function () {
-            AbstractEditor::setImageResolver(function (array $ids) {
-                $dimension = $this->app['request']->isMobile() ? 'M' : 'L';
-                $fileClass = $this->app['xe.storage']->getModel();
-                $files = $fileClass::whereIn('id', $ids)->get();
+        AbstractEditor::setImageResolver(function (array $ids) {
+            $dimension = $this->app['request']->isMobile() ? 'M' : 'L';
+            $fileClass = $this->app['xe.storage']->getModel();
+            $files = $fileClass::whereIn('id', $ids)->get();
 
-                $handler = $this->app['xe.media']->getHandler(Media::TYPE_IMAGE);
-                $images = [];
-                foreach ($files as $file) {
-                    $images[] = $handler->getThumbnail(
-                        $this->app['xe.media']->make($file),
-                        EditorHandler::THUMBNAIL_TYPE,
-                        $dimension
-                    );
-                }
+            $handler = $this->app['xe.media']->getHandler(Media::TYPE_IMAGE);
+            $images = [];
+            foreach ($files as $file) {
+                $images[] = $handler->getThumbnail(
+                    $this->app['xe.media']->make($file),
+                    EditorHandler::THUMBNAIL_TYPE,
+                    $dimension
+                );
+            }
 
-                return $images;
-            });
-            AbstractEditor::setPrivilegedDeterminer(function () {
-                return $this->app['auth']->user()->isManager();
-            });
+            return $images;
+        });
+        AbstractEditor::setPrivilegedDeterminer(function () {
+            return $this->app['auth']->user()->isManager();
         });
 
         $this->app['events']->listen('xe.editor.option.building', function ($editor) {

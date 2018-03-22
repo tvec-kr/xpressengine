@@ -26,6 +26,15 @@ use Xpressengine\Widget\WidgetParser;
 class WidgetServiceProvider extends ServiceProvider
 {
     /**
+     * boot
+     *
+     * @return void
+     */
+    public function boot()
+    {
+    }
+
+    /**
      * Register the service provider.
      *
      * @return void
@@ -61,14 +70,16 @@ class WidgetServiceProvider extends ServiceProvider
             return $widgetHandler;
         });
         $this->app->alias(WidgetBoxHandler::class, 'xe.widgetbox');
+
+        $this->resolving();
     }
 
     /**
-     * boot
+     * Register resolving callbacks.
      *
      * @return void
      */
-    public function boot()
+    protected function resolving()
     {
         $this->app->resolving('xe.widgetbox', function () {
             AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {

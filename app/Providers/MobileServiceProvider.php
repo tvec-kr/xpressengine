@@ -17,9 +17,6 @@ class MobileServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('view', function () {
-            $this->extendBlade();
-        });
     }
 
     /**
@@ -29,55 +26,49 @@ class MobileServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerRequestRebindHandler();
-    }
-
-    /**
-     * Register a resolver for the authenticated user.
-     *
-     * @return void
-     */
-    protected function registerRequestRebindHandler()
-    {
         $this->app->rebinding(
             'request',
             function ($app, $request) {
                 $request->setMobileResolver($this->getMobileResolver());
             }
         );
+
+        $this->resolving();
     }
 
     /**
-     * extendBlade
+     * Register resolving callbacks.
      *
      * @return void
      */
-    protected function extendBlade()
+    protected function resolving()
     {
-        Blade::directive(
-            'mobileonly',
-            function ($expression) {
-                return "<?php if(app('request')->isMobile()) { ?>";
-            }
-        );
-        Blade::directive(
-            'endmobileonly',
-            function ($expression) {
-                return "<?php } ?>";
-            }
-        );
-        Blade::directive(
-            'desktoponly',
-            function ($expression) {
-                return "<?php if(!app('request')->isMobile()) { ?>";
-            }
-        );
-        Blade::directive(
-            'enddesktoponly',
-            function ($expression) {
-                return "<?php } ?>";
-            }
-        );
+        $this->app->resolving('view', function () {
+            Blade::directive(
+                'mobileonly',
+                function ($expression) {
+                    return "<?php if(app('request')->isMobile()) { ?>";
+                }
+            );
+            Blade::directive(
+                'endmobileonly',
+                function ($expression) {
+                    return "<?php } ?>";
+                }
+            );
+            Blade::directive(
+                'desktoponly',
+                function ($expression) {
+                    return "<?php if(!app('request')->isMobile()) { ?>";
+                }
+            );
+            Blade::directive(
+                'enddesktoponly',
+                function ($expression) {
+                    return "<?php } ?>";
+                }
+            );
+        });
     }
 
     protected function getMobileResolver()

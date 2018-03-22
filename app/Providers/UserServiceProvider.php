@@ -102,7 +102,16 @@ class UserServiceProvider extends ServiceProvider
 
         $this->registerTerms();
 
+        $this->resolving();
+    }
 
+    /**
+     * Register resolving callbacks.
+     *
+     * @return void
+     */
+    protected function resolving()
+    {
         $this->app->resolving('validator', function () {
             $this->configValidation();
             // register validation extension for email prefix

@@ -54,6 +54,16 @@ class TranslationServiceProvider extends ServiceProvider
         });
         $this->app->alias(Translator::class, 'xe.translator');
 
+        $this->resolving();
+    }
+
+    /**
+     * Register resolving callbacks.
+     *
+     * @return void
+     */
+    protected function resolving()
+    {
         $this->app->resolving('validator', function ($instance, $app) {
             $instance->resolver(function ($translator, $data, $rules, $messages, $customAttributes) use ($app) {
                 return new Validator($app['xe.translator'], $data, $rules, $messages, $customAttributes);
@@ -102,6 +112,11 @@ class TranslationServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
     public function provides()
     {
         return ['xe.translator'];
