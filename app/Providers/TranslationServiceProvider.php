@@ -37,47 +37,6 @@ class TranslationServiceProvider extends ServiceProvider
         $this->app['events']->listen(LocaleUpdated::class, function($event) {
             $this->app['xe.translator']->setLocale($event->locale);
         });
-
-        $this->app['validator']->extend('LangRequired', function ($attribute, $value) {
-            $fields = $this->app['request']->all();
-            $protocol = 'xe_lang_preprocessor://';
-            $prefix = null;
-            foreach ($fields as $key => $val) {
-                if (starts_with($key, $protocol)) {
-                    if ($val == $attribute) {
-                        $prefix = substr($key, 0, strrpos($key, '/'));
-                        break;
-                    }
-                }
-            }
-
-            $locale = $this->app['xe.translator']->getLocale();
-            $name = $prefix . '/locale/' . $locale;
-            $validator = null;
-
-            foreach ($fields as $key => $val) {
-                if ($name == $key) {
-                    $validator = $this->app['validator']->make(
-                        [$attribute => $val],
-                        [$attribute => 'Required']
-                    );
-                }
-            }
-
-            if ($validator === null) {
-                return false;
-            }
-
-            return $validator->passes();
-        }, 'The :attribute field is required.');
-        $this->app['validator']->replacer(
-            'LangRequired',
-            function ($message, $attribute, $rule, $parameters, $validator) {
-                return xe_trans('validation.required', [
-                    'attribute' => $validator->getDisplayableAttribute($attribute)
-                ]);
-            }
-        );
     }
 
     public function register()
@@ -99,6 +58,47 @@ class TranslationServiceProvider extends ServiceProvider
             $instance->resolver(function ($translator, $data, $rules, $messages, $customAttributes) use ($app) {
                 return new Validator($app['xe.translator'], $data, $rules, $messages, $customAttributes);
             });
+
+            $instance->extend('LangRequired', function ($attribute, $value) {
+                $fields = $this->app['request']->all();
+                $protocol = 'xe_lang_preprocessor://';
+                $prefix = null;
+                foreach ($fields as $key => $val) {
+                    if (starts_with($key, $protocol)) {
+                        if ($val == $attribute) {
+                            $prefix = substr($key, 0, strrpos($key, '/'));
+                            break;
+                        }
+                    }
+                }
+
+                $locale = $this->app['xe.translator']->getLocale();
+                $name = $prefix . '/locale/' . $locale;
+                $validator = null;
+
+                foreach ($fields as $key => $val) {
+                    if ($name == $key) {
+                        $validator = $this->app['validator']->make(
+                            [$attribute => $val],
+                            [$attribute => 'Required']
+                        );
+                    }
+                }
+
+                if ($validator === null) {
+                    return false;
+                }
+
+                return $validator->passes();
+            }, 'The :attribute field is required.');
+            $instance->replacer(
+                'LangRequired',
+                function ($message, $attribute, $rule, $parameters, $validator) {
+                    return xe_trans('validation.required', [
+                        'attribute' => $validator->getDisplayableAttribute($attribute)
+                    ]);
+                }
+            );
         });
     }
 

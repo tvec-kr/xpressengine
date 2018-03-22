@@ -139,6 +139,8 @@ class PluginServiceProvider extends ServiceProvider
         // boot plugins
         $this->app->booted(
             function () {
+                $this->loadComponents();
+
                 /** @var PluginHandler $pluginHandler */
                 $pluginHandler = $this->app['xe.plugin'];
 
@@ -150,10 +152,26 @@ class PluginServiceProvider extends ServiceProvider
             }
         );
 
-        // register skin for Plugin settings page
-        $this->app->make('xe.pluginRegister')->add(PluginSettingsSkin::class);
-
         $this->registerSettingsPermissions();
+    }
+
+    private function loadComponents()
+    {
+        // @todo debug 상태에선 캐시 삭제 및 비사용 처리
+        if ($this->componentsCached()) {
+            require $this->getCachedComponentsPath();
+        } else {
+            require base_path('app/components.php');
+        }
+    }
+    private function componentsCached()
+    {
+        return $this->app['files']->exists($this->getCachedComponentsPath());
+    }
+
+    private function getCachedComponentsPath()
+    {
+        return base_path(config('xe.plugin.cache_path.component'));
     }
 
     private function registerSettingsPermissions()

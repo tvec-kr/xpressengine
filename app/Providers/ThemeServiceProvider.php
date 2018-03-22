@@ -47,14 +47,10 @@ class ThemeServiceProvider extends ServiceProvider
         // TODO: check permission!!
         $this->registerInterceptForThemePreview();
 
-        $this->registerBlankTheme();
-
-        $this->registerThemeListUIObject();
-
-        $this->registerMobileResolver();
-
-        $this->setThemeHandlerForTheme();
-
+        $this->app->resolving('xe.theme', function () {
+            $this->registerMobileResolver();
+            $this->setThemeHandlerForTheme();
+        });
     }
 
     /**
@@ -81,26 +77,6 @@ class ThemeServiceProvider extends ServiceProvider
                 }
             );
         }
-    }
-
-    /**
-     * registerBlankTheme
-     *
-     * @return void
-     */
-    protected function registerBlankTheme()
-    {
-        /** @var PluginRegister $registryManager */
-        $registryManager = $this->app['xe.pluginRegister'];
-        $blankThemeClass = $this->app['config']->get('xe.theme.blank');
-        $registryManager->add($blankThemeClass);
-    }
-
-    private function registerThemeListUIObject()
-    {
-        /** @var PluginRegister $registryManager */
-        $registryManager = $this->app['xe.pluginRegister'];
-        $registryManager->add(ThemeSelect::class);
     }
 
     private function registerMobileResolver()

@@ -34,8 +34,6 @@ class CaptchaServiceProvider extends ServiceProvider
     public function boot()
     {
         CaptchaUIObject::setManager($this->app['xe.captcha']);
-
-        $this->app['xe.pluginRegister']->add(CaptchaUIObject::class);
     }
 
     /**

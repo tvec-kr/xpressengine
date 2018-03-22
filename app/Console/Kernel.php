@@ -46,6 +46,8 @@ class Kernel extends ConsoleKernel
         Commands\PluginComposerSync::class,
         Commands\ThemeMake::class,
         Commands\SkinMake::class,
+        Commands\ComponentCache::class,
+        Commands\ComponentClear::class,
     ];
 
     protected $skipXE = false;

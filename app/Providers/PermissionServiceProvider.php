@@ -49,8 +49,6 @@ class PermissionServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        $this->app['xe.pluginRegister']->add(PermissionUIObject::class);
-
         foreach ($this->policies as $class => $policy) {
             $gate->policy($class, $policy);
         }

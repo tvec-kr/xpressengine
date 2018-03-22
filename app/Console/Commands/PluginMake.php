@@ -351,7 +351,7 @@ class PluginMake extends Command
      */
     protected function getStub($filename)
     {
-        return __DIR__.'/stubs/'.$filename;
+        return __DIR__.'/stubs/plugin/'.$filename;
     }
 
     /**

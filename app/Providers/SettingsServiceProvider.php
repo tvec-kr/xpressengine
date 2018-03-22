@@ -8,7 +8,6 @@
 
 namespace App\Providers;
 
-use App\Themes\DefaultSettings;
 use App\Themes\SettingsTheme;
 use App\UIObjects\Settings\SettingsPermission;
 use Illuminate\Support\ServiceProvider;
@@ -16,7 +15,6 @@ use Xpressengine\Log\Loggers\UserLogger;
 use Xpressengine\Log\LogHandler;
 use Xpressengine\Register\Container;
 use Xpressengine\Settings\SettingsHandler;
-use Xpressengine\Settings\SettingsMenuPermission;
 
 class SettingsServiceProvider extends ServiceProvider
 {
@@ -42,32 +40,10 @@ class SettingsServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        // register default manage theme.
-        $this->registerDefaultTheme();
-
         // register settings menus;
         $this->registerSettingsMenus();
 
-        // register settings permission uiobject
-        $this->registerPermissionUIObject();
-
         $this->registerLoggers();
-    }
-
-    private function registerPermissionUIObject()
-    {
-        $this->app['xe.pluginRegister']->add(SettingsPermission::class);
-    }
-
-    /**
-     * rgisterDefaultTheme
-     *
-     * @return void
-     */
-    protected function registerDefaultTheme()
-    {
-        $this->app['xe.pluginRegister']->add(SettingsTheme::class);
-        SettingsTheme::boot();
     }
 
     private function registerSettingsMenus()

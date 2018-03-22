@@ -50,11 +50,13 @@ class MediaServiceProvider extends ServiceProvider
     {
         Thumbnailer::setManager(new ImageManager());
 
-        ImageRepository::setModel(Image::class);
-        VideoRepository::setModel(Video::class);
-        AudioRepository::setModel(Audio::class);
-
         $this->hooks();
+
+        $this->app->resolving('xe.media', function () {
+            ImageRepository::setModel(Image::class);
+            VideoRepository::setModel(Video::class);
+            AudioRepository::setModel(Audio::class);
+        });
     }
 
     /**

@@ -42,6 +42,8 @@ class PluginRegister
      */
     const KEY_DELIMITER = '/';
 
+    const KEY_PREFIX = 'components';
+
     /**
      * register container
      *
@@ -66,6 +68,11 @@ class PluginRegister
     public function __construct(Container $register)
     {
         $this->register = $register;
+    }
+
+    public function getAllComponents()
+    {
+        return $this->register->get(static::KEY_PREFIX);
     }
 
     /**
@@ -117,7 +124,7 @@ class PluginRegister
     {
         /** @var ComponentInterface $component */
         $id = $component::getId();
-        $this->register->set($id, $component);
+        $this->register->set($this->getKey($id), $component);
 
         $parts = $this->split($id);
 
@@ -151,7 +158,7 @@ class PluginRegister
                 if ($parts['target'] != '') {
                     $key = $target = $parts['target'].self::KEY_DELIMITER.$parts['type'];
                 }
-                $this->register->set($key.'.'.$component::getId(), $component);
+                $this->register->set($this->getKey($key).'.'.$component::getId(), $component);
                 break;
         }
     }
@@ -165,7 +172,7 @@ class PluginRegister
      */
     public function get($id)
     {
-        return $this->register->get($id);
+        return $this->register->get($this->getKey($id));
     }
 
     /**
@@ -230,5 +237,22 @@ class PluginRegister
         $class::setId($info['id']);
 
         $class::setComponentInfo(array_except($info, ['class', 'id']));
+    }
+
+    protected function getKey($key)
+    {
+        return static::KEY_PREFIX . '.' . $key;
+    }
+
+    public function addComponents(array $components)
+    {
+        foreach ($components as $component) {
+            $this->add($component);
+        }
+    }
+
+    public function setComponents(array $components)
+    {
+        $this->register->set(static::KEY_PREFIX, $components);
     }
 }

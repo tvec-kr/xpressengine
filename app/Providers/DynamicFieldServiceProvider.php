@@ -58,47 +58,13 @@ class DynamicFieldServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        app('xe.db.proxy')->register(new DatabaseProxy(App::make('xe.dynamicField')));
-        $this->registerFieldType();
-        $this->registerFieldDefaultSkin();
-        $this->addValidationRule();
-    }
+        $this->app->resolving('xe.db.proxy', function ($instance, $app) {
+            $instance->register(new DatabaseProxy($app['xe.dynamicField']));
+        });
 
-    /**
-     * register field type
-     *
-     * @return void
-     */
-    private function registerFieldType()
-    {
-        $registerHandler = app('xe.dynamicField')->getRegisterHandler();
-
-        $registerHandler->add(Category::class);
-        $registerHandler->add(Number::class);
-        $registerHandler->add(Text::class);
-        $registerHandler->add(Boolean::class);
-        $registerHandler->add(Address::class);
-        $registerHandler->add(CellPhoneNumber::class);
-        $registerHandler->add(Textarea::class);
-        $registerHandler->add(Email::class);
-        $registerHandler->add(Url::class);
-    }
-
-    private function registerFieldDefaultSkin()
-    {
-        $registerHandler = app('xe.dynamicField')->getRegisterHandler();
-
-        $registerHandler->add(CategoryDefault::class);
-        $registerHandler->add(NumberDefault::class);
-        $registerHandler->add(TextDefault::class);
-        $registerHandler->add(TextEmail::class);
-        $registerHandler->add(TextUrl::class);
-        $registerHandler->add(BooleanDefault::class);
-        $registerHandler->add(AddressDefault::class);
-        $registerHandler->add(CellPhoneNumberDefault::class);
-        $registerHandler->add(TextareaDefault::class);
-        $registerHandler->add(EmailDefault::class);
-        $registerHandler->add(UrlDefault::class);
+        $this->app->resolving('validator', function () {
+            $this->addValidationRule();
+        });
     }
 
     private function addValidationRule()

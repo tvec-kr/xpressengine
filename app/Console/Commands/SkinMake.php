@@ -186,7 +186,7 @@ class SkinMake extends Command
      */
     protected function getStub($filename)
     {
-        return __DIR__.'/stubs/'.$filename;
+        return __DIR__.'/stubs/plugin/'.$filename;
     }
 
     /**
@@ -507,7 +507,7 @@ class SkinMake extends Command
         $plugin = $this->attr('plugin');
         $path = $plugin->getPath($this->attr('path'));
 
-        if (!$this->files->copyDirectory(__DIR__.'/stubs/skin', $path)) {
+        if (!$this->files->copyDirectory(__DIR__.'/stubs/plugin/skin', $path)) {
             throw new \Exception("Unable to create skin directory[$path]. please check permission.");
         }
         rename($path.'/info.stub', $path.'/info.php');

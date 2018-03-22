@@ -83,51 +83,16 @@ class WidgetServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerWidgets();
-        $this->registerWidgetSkins();
-        $this->registerUIObject();
+        $this->app->resolving('xe.widgetbox', function () {
+            WidgetBoxRepository::setModel(WidgetBox::class);
 
-        WidgetBoxRepository::setModel(WidgetBox::class);
+            AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {
+                return $this->app['xe.widget']->generateCode($widgetId, $inputs);
+            });
 
-        AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {
-            return $this->app['xe.widget']->generateCode($widgetId, $inputs);
+            WidgetBoxHandler::setContainer($this->app['xe.register']);
+            WidgetBoxHandler::addPresenter(BootstrapPresenter::class);
+            WidgetBoxHandler::addPresenter(XEUIPresenter::class);
         });
-
-        WidgetBoxHandler::setContainer($this->app['xe.register']);
-        WidgetBoxHandler::addPresenter(BootstrapPresenter::class);
-        WidgetBoxHandler::addPresenter(XEUIPresenter::class);
-    }
-
-    /**
-     * registerWidgets
-     *
-     * @return void
-     */
-    protected function registerWidgets()
-    {
-        $register = $this->app['xe.pluginRegister'];
-        $register->add(StorageSpace::class);
-        $register->add(ContentInfo::class);
-        $register->add(SystemInfo::class);
-        $register->add(HtmlWidget::class);
-        $register->add(DownloadRank::class);
-    }
-
-    protected function registerWidgetSkins()
-    {
-        $register = $this->app['xe.pluginRegister'];
-        $register->add(SystemInfoSkin::class);
-        $register->add(ContentInfoSkin::class);
-        $register->add(StorageSpaceSkin::class);
-        $register->add(HtmlWidgetSkin::class);
-        $register->add(DownloadRankSkin::class);
-    }
-
-    protected function registerUIObject()
-    {
-        $registryManager = $this->app['xe.pluginRegister'];
-        $registryManager->add(WidgetGenerator::class);
-
-        $registryManager->add(WidgetBoxUIObject::class);
     }
 }

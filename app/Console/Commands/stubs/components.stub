@@ -1,0 +1,3 @@
+<?php
+
+app('xe.pluginRegister')->setComponents(unserialize(base64_decode('{{components}}')));

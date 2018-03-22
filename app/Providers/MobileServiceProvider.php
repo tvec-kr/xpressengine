@@ -17,7 +17,9 @@ class MobileServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->extendBlade();
+        $this->app->resolving('view', function () {
+            $this->extendBlade();
+        });
     }
 
     /**

@@ -31,6 +31,13 @@ trait EloquentRepositoryTrait
      */
     protected static $models = [];
 
+    public function __construct()
+    {
+        if (property_exists($this, 'model')) {
+            static::setModel(static::getModel() ?: $this->model);
+        }
+    }
+
     /**
      * update
      *
@@ -102,7 +109,9 @@ trait EloquentRepositoryTrait
      */
     public static function setModel($model)
     {
-        static::$models[get_called_class()] = '\\' . ltrim($model, '\\');
+        if ($model) {
+            static::$models[get_called_class()] = '\\' . ltrim($model, '\\');
+        }
     }
 
     /**

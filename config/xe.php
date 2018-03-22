@@ -391,7 +391,10 @@ return [
         ],
         'operation' => [
             'time_limit' => 1200
-        ]
+        ],
+        'cache_path' => [
+            'component' => 'bootstrap/cache/components.php'
+        ],
     ],
 
     'uiobject' => [

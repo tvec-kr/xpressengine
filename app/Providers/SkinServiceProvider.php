@@ -37,17 +37,4 @@ class SkinServiceProvider extends ServiceProvider
         });
         $this->app->alias(SkinHandler::class, 'xe.skin');
     }
-
-    public function boot()
-    {
-        $this->app['xe.pluginRegister']->add(\App\Skins\Error\DefaultErrorSkin::class);
-        $this->registerSkinListUIObject();
-    }
-
-    private function registerSkinListUIObject()
-    {
-        /** @var \Xpressengine\Plugin\PluginRegister $registryManager */
-        $registryManager = $this->app['xe.pluginRegister'];
-        $registryManager->add(SkinSelect::class);
-    }
 }

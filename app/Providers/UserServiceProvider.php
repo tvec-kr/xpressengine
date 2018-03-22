@@ -19,9 +19,7 @@ use App\ToggleMenus\User\ProfileItem;
 use Closure;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Support\ServiceProvider;
-use Xpressengine\Media\MediaManager;
 use Xpressengine\Media\Thumbnailer;
-use Xpressengine\Storage\Storage;
 use Xpressengine\User\EmailBroker;
 use Xpressengine\User\Guard;
 use Xpressengine\User\Middleware\Admin;
@@ -73,8 +71,6 @@ class UserServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->setModels();
-
         // extend xe auth
         $this->extendAuth();
 
@@ -92,35 +88,8 @@ class UserServiceProvider extends ServiceProvider
 
         $this->setProfileImageResolverOfUser();
 
-        // set config for validation of password, displayname
-        $this->configValidation();
-
-        // register validation extension for email prefix
-        $this->extendValidator();
-
-        // register default user skin
-        $this->registerDefaultSkins();
-
-        $this->registerSettingsPermissions();
-
         // register admin middleware
         $this->app['router']->aliasMiddleware('admin', Admin::class);
-
-        // register toggle menu
-        $this->registerToggleMenu();
-
-        UserHandler::setContainer($this->app['xe.register']);
-        // add RegiserForm
-        $this->addRegisterFormParts();
-
-        $this->addUserSettingSection();
-
-        $this->app->resolving('mailer', function ($mailer) {
-            $config = $this->app['xe.config']->get('user.common');
-            if (!empty($config->get('webmasterEmail'))) {
-                $mailer->alwaysFrom($config->get('webmasterEmail'), $config->get('webmasterName'));
-            }
-        });
     }
 
     /**
@@ -139,6 +108,30 @@ class UserServiceProvider extends ServiceProvider
         $this->registerImageHandler();
 
         $this->registerTerms();
+
+
+        $this->app->resolving('validator', function () {
+            $this->configValidation();
+            // register validation extension for email prefix
+            $this->extendValidator();
+        });
+        $this->app->resolving('xe.settings', function () {
+            $this->registerSettingsPermissions();
+        });
+
+        $this->app->resolving('xe.user', function () {
+            $this->setModels();
+            UserHandler::setContainer($this->app['xe.register']);
+            $this->addRegisterFormParts();
+            $this->addUserSettingSection();
+        });
+
+        $this->app->resolving('mailer', function ($mailer) {
+            $config = $this->app['xe.config']->get('user.common');
+            if (!empty($config->get('webmasterEmail'))) {
+                $mailer->alwaysFrom($config->get('webmasterEmail'), $config->get('webmasterName'));
+            }
+        });
     }
 
     /**
@@ -171,42 +164,6 @@ class UserServiceProvider extends ServiceProvider
                 );
             }
         );
-    }
-
-    /**
-     * Register the token repository implementation.
-     *
-     * @return void
-     */
-    protected function registerTokenRepository()
-    {
-        // register register-token repository
-        $this->app->singleton(RegisterTokenRepository::class, function ($app) {
-            $connection = $app['xe.db']->connection('user');
-
-            // The database token repository is an implementation of the token repository
-            // interface, and is responsible for the actual storing of auth tokens and
-            // their e-mail addresses. We will inject this table and hash key to it.
-            $table = $app['config']['auth.register.table'];
-
-            $keygen = $app['xe.keygen'];
-
-            $expire = $app['config']->get('auth.register.expire', 60);
-
-            return new RegisterTokenRepository($connection, $keygen, $table, $expire);
-        });
-        $this->app->alias(RegisterTokenRepository::class, 'xe.user.register.tokens');
-    }
-
-    /**
-     * registerMemberMenu
-     *
-     * @return void
-     */
-    protected function registerToggleMenu()
-    {
-        $this->app['xe.pluginRegister']->add(ProfileItem::class);
-        $this->app['xe.pluginRegister']->add(ManageItem::class);
     }
 
     /**
@@ -273,7 +230,7 @@ class UserServiceProvider extends ServiceProvider
      */
     private function registerAccoutRepository()
     {
-        $this->app->singleton(UserAccountRepositoryInterface::class, function ($app) {
+        $this->app->singleton(UserAccountRepositoryInterface::class, function () {
             return new UserAccountRepository;
         });
         $this->app->alias(UserAccountRepositoryInterface::class, 'xe.user.accounts');
@@ -327,6 +284,31 @@ class UserServiceProvider extends ServiceProvider
         $this->app->singleton(TermsRepository::class, function ($app) {
             return new TermsRepository;
         });
+    }
+
+    /**
+     * Register the token repository implementation.
+     *
+     * @return void
+     */
+    protected function registerTokenRepository()
+    {
+        // register register-token repository
+        $this->app->singleton(RegisterTokenRepository::class, function ($app) {
+            $connection = $app['xe.db']->connection('user');
+
+            // The database token repository is an implementation of the token repository
+            // interface, and is responsible for the actual storing of auth tokens and
+            // their e-mail addresses. We will inject this table and hash key to it.
+            $table = $app['config']['auth.register.table'];
+
+            $keygen = $app['xe.keygen'];
+
+            $expire = $app['config']->get('auth.register.expire', 60);
+
+            return new RegisterTokenRepository($connection, $keygen, $table, $expire);
+        });
+        $this->app->alias(RegisterTokenRepository::class, 'xe.user.register.tokens');
     }
 
     private function setModels()
@@ -503,19 +485,6 @@ class UserServiceProvider extends ServiceProvider
         );
     }
 
-    /**
-     * registerDefaultSkins
-     *
-     * @return void
-     */
-    private function registerDefaultSkins()
-    {
-        $pluginRegister = $this->app['xe.pluginRegister'];
-        $pluginRegister->add(\App\Skins\Member\AuthSkin::class);
-        $pluginRegister->add(\App\Skins\Member\SettingsSkin::class);
-        $pluginRegister->add(\App\Skins\Member\ProfileSkin::class);
-    }
-
     private function registerSettingsPermissions()
     {
         $permissions = [
@@ -536,26 +505,21 @@ class UserServiceProvider extends ServiceProvider
 
     private function setProfileImageResolverOfUser()
     {
-        $default = $this->app['config']['xe.user.profileImage.default'];
-        $storage = $this->app['xe.storage'];
-        $media = $this->app['xe.media'];
         User::setProfileImageResolver(
-            function ($imageId) use ($default, $storage, $media) {
+            function ($imageId) {
                 try {
                     if($imageId !== null) {
-                        /** @var Storage $storage */
-                        $file = $storage->find($imageId);
+                        $file = $this->app['xe.storage']->find($imageId);
 
                         if ($file !== null) {
-                            /** @var MediaManager $media */
-                            $mediaFile = $media->make($file);
+                            $mediaFile = $this->app['xe.media']->make($file);
                             return asset($mediaFile->url());
                         }
                     }
                 } catch(\Exception $e) {
                 }
 
-                return asset($default);
+                return asset($this->app['config']['xe.user.profileImage.default']);
             }
         );
     }

@@ -50,20 +50,16 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        MenuItemRepository::setMenuModelProvider(function () {
-            return MenuRepository::getModel();
-        });
-        MenuRepository::setModel(Menu::class);
-        MenuItemRepository::setModel(MenuItem::class);
+        // @todo route 처리과정에서 xe.menu 를 통하지 않고 메뉴를 사용하는지 점검
+//        $this->app->resolving('xe.menu', function () {
+            MenuItemRepository::setMenuModelProvider(function () {
+                return MenuRepository::getModel();
+            });
+            MenuRepository::setModel(Menu::class);
+            MenuItemRepository::setModel(MenuItem::class);
+//        });
 
         $this->app['events']->subscribe(EventListener::class);
-
-        $pluginRegister = $this->app['xe.pluginRegister'];
-
-        $pluginRegister->add(MenuType::class);
-        $pluginRegister->add(MenuSelect::class);
-        $pluginRegister->add(TypeSelect::class);
-        $pluginRegister->add(DirectLink::class);
 
         foreach ($this->policies as $class => $policy) {
             $gate->policy($class, $policy);
