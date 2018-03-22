@@ -8,8 +8,6 @@
 
 namespace App\Providers;
 
-use App\Themes\SettingsTheme;
-use App\UIObjects\Settings\SettingsPermission;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Log\Loggers\UserLogger;
 use Xpressengine\Log\LogHandler;

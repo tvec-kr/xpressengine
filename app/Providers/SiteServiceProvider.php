@@ -16,7 +16,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Http\Request;
-use Xpressengine\Site\Site;
 use Xpressengine\Site\SiteHandler;
 use Xpressengine\Site\SiteRepository;
 

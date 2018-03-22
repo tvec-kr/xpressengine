@@ -17,8 +17,6 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Category\CategoryHandler;
 use Xpressengine\Category\EventListener;
-use Xpressengine\Category\Models\Category;
-use Xpressengine\Category\Models\CategoryItem;
 use Xpressengine\Category\Repositories\CategoryItemRepository;
 use Xpressengine\Category\Repositories\CategoryRepository;
 

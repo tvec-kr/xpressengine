@@ -18,7 +18,6 @@ use Illuminate\Support\ServiceProvider;
 use Xpressengine\Permission\PermissionHandler;
 use Xpressengine\Permission\Repositories\CacheDecorator;
 use Xpressengine\Permission\Repositories\DatabaseRepository;
-use App\UIObjects\Permission\Permission as PermissionUIObject;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Xpressengine\Permission\Instance;
 use Xpressengine\Permission\InstancePolicy;

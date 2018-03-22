@@ -8,20 +8,7 @@
 
 namespace App\Providers;
 
-use App\Skins\Widget\ContentInfoSkin;
-use App\Skins\Widget\DownloadRankSkin;
-use App\Skins\Widget\HtmlWidgetSkin;
-use App\Skins\Widget\StorageSpaceSkin;
-use App\Skins\Widget\SystemInfoSkin;
-use App\UIObjects\Widget\WidgetGenerator;
-use App\UIObjects\Widget\WidgetBox as WidgetBoxUIObject;
-use App\Widgets\ContentInfo;
-use App\Widgets\DownloadRank;
-use App\Widgets\HtmlWidget;
-use App\Widgets\StorageSpace;
-use App\Widgets\SystemInfo;
 use Illuminate\Support\ServiceProvider;
-use Xpressengine\Widget\Models\WidgetBox;
 use Xpressengine\Widget\Presenters\AbstractPresenter;
 use Xpressengine\Widget\Presenters\BootstrapPresenter;
 use Xpressengine\Widget\Presenters\XEUIPresenter;

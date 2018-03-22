@@ -8,12 +8,10 @@
 
 namespace App\Providers;
 
-use App\Skins\Plugin\PluginSettingsSkin;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Plugin\Cache\ArrayPluginCache;
 use Xpressengine\Plugin\Cache\FilePluginCache;
 use Xpressengine\Plugin\Composer\ComposerFileWriter;
-use Xpressengine\Plugin\Exceptions\ComponentNotFoundException;
 use Xpressengine\Plugin\MetaFileReader;
 use Xpressengine\Plugin\PluginCollection;
 use Xpressengine\Plugin\PluginEntity;

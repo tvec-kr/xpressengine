@@ -14,34 +14,12 @@
 
 namespace App\Providers;
 
-use App\FieldTypes\Email;
-use App\FieldTypes\Textarea;
-use App\FieldTypes\Url;
 use Illuminate\Support\ServiceProvider;
-use App;
-use XeRegister;
 use Xpressengine\DynamicField\ConfigHandler;
 use Xpressengine\DynamicField\DatabaseProxy;
 use Xpressengine\DynamicField\DynamicFieldHandler;
 use Xpressengine\DynamicField\RegisterHandler;
 use Xpressengine\DynamicField\RevisionManager;
-use App\FieldTypes\Category;
-use App\FieldTypes\Number;
-use App\FieldTypes\Text;
-use App\FieldTypes\Boolean;
-use App\FieldTypes\Address;
-use App\FieldTypes\CellPhoneNumber;
-use App\FieldSkins\Category\DefaultSkin as CategoryDefault;
-use App\FieldSkins\Number\DefaultSkin as NumberDefault;
-use App\FieldSkins\Text\DefaultSkin as TextDefault;
-use App\FieldSkins\Text\EmailSkin as TextEmail;
-use App\FieldSkins\Text\UrlSkin as TextUrl;
-use App\FieldSkins\Boolean\DefaultSkin as BooleanDefault;
-use App\FieldSkins\Address\DefaultSkin as AddressDefault;
-use App\FieldSkins\CellPhoneNumber\DefaultSkin as CellPhoneNumberDefault;
-use App\FieldSkins\Textarea\DefaultSkin as TextareaDefault;
-use App\FieldSkins\Email\DefaultSkin as EmailDefault;
-use App\FieldSkins\Url\DefaultSkin as UrlDefault;
 
 /**
  * laravel service provider

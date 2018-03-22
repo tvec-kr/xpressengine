@@ -14,8 +14,6 @@
 
 namespace App\Providers;
 
-use App\ToggleMenus\User\ManageItem;
-use App\ToggleMenus\User\ProfileItem;
 use Closure;
 use Illuminate\Contracts\Validation\Factory as Validator;
 use Illuminate\Support\ServiceProvider;
@@ -24,13 +22,8 @@ use Xpressengine\User\EmailBroker;
 use Xpressengine\User\Guard;
 use Xpressengine\User\Middleware\Admin;
 use Xpressengine\User\Models\Guest;
-use Xpressengine\User\Models\PendingEmail;
-use Xpressengine\User\Models\Term;
 use Xpressengine\User\Models\UnknownUser;
 use Xpressengine\User\Models\User;
-use Xpressengine\User\Models\UserAccount;
-use Xpressengine\User\Models\UserEmail;
-use Xpressengine\User\Models\UserGroup;
 use Xpressengine\User\Parts\AgreementPart;
 use Xpressengine\User\Parts\CaptchaPart;
 use Xpressengine\User\Parts\DefaultPart;

@@ -21,7 +21,6 @@ use Xpressengine\Presenter\Json\JsonPresenter;
 use Xpressengine\Presenter\Presenter;
 use Xpressengine\Presenter\Redirector;
 use Xpressengine\Routing\InstanceConfig;
-use Xpressengine\Storage\File;
 
 /**
  * Presenter Service Provider

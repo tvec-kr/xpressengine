@@ -8,25 +8,8 @@
 
 namespace App\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
-use Xpressengine\Plugin\PluginRegister;
 use Xpressengine\UIObject\UIObjectHandler;
-use App\UIObjects\Form\Form;
-use App\UIObjects\Form\FormCheckbox;
-use App\UIObjects\Form\FormFile;
-use App\UIObjects\Form\FormImage;
-use App\UIObjects\Form\FormLangText;
-use App\UIObjects\Form\FormLangTextArea;
-use App\UIObjects\Form\FormPassword;
-use App\UIObjects\Form\FormSelect;
-use App\UIObjects\Form\FormText;
-use App\UIObjects\Form\FormTextArea;
-use App\UIObjects\Form\FormColorpicker;
-use App\UIObjects\Lang\LangText;
-use App\UIObjects\Lang\LangTextArea;
-use App\UIObjects\Member\ProfileBgImage;
-use App\UIObjects\Member\ProfileImage;
 
 class UIObjectServiceProvider extends ServiceProvider
 {
@@ -53,37 +36,5 @@ class UIObjectServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->registerBaseUIObject();
-    }
-
-    /**
-     * registerBaseUIObject
-     *
-     * @return void
-     */
-    protected function registerBaseUIObject()
-    {
-        // register base uiobjects
-        /** @var PluginRegister $register */
-        $register = $this->app['xe.pluginRegister'];
-
-        $register->add(Form::class);
-        $register->add(FormText::class);
-        $register->add(FormPassword::class);
-        $register->add(FormTextArea::class);
-        $register->add(FormSelect::class);
-        $register->add(FormCheckbox::class);
-        $register->add(FormImage::class);
-        $register->add(FormFile::class);
-        $register->add(FormColorpicker::class);
-
-        $register->add(ProfileImage::class);
-        $register->add(ProfileBgImage::class);
-
-        $register->add(LangText::class);
-        $register->add(LangTextArea::class);
-
-        $register->add(FormLangText::class);
-        $register->add(FormLangTextArea::class);
     }
 }

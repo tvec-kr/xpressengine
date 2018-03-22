@@ -13,7 +13,6 @@ use Xpressengine\Plugin\PluginRegister;
 use Xpressengine\Support\Exceptions\AccessDeniedHttpException;
 use Xpressengine\Theme\AbstractTheme;
 use Xpressengine\Theme\ThemeHandler;
-use App\UIObjects\Theme\ThemeSelect;
 
 class ThemeServiceProvider extends ServiceProvider
 {

@@ -14,21 +14,16 @@
 
 namespace App\Providers;
 
-use App\UIObjects\Menu\MenuSelect;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Menu\EventListener;
 use Xpressengine\Menu\MenuHandler;
 use Xpressengine\Menu\MenuItemPolicy;
-use Xpressengine\Menu\Models\Menu;
 use Xpressengine\Menu\Models\MenuItem;
 use Xpressengine\Menu\ModuleHandler;
 use Xpressengine\Menu\Repositories\IdentifierGenerator;
 use Xpressengine\Menu\Repositories\MenuItemRepository;
 use Xpressengine\Menu\Repositories\MenuRepository;
-use App\UIObjects\Menu\MenuType;
-use Xpressengine\Menu\MenuType\DirectLink;
-use App\UIObjects\Menu\TypeSelect;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 
 /**

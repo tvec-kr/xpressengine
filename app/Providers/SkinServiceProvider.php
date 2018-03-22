@@ -8,7 +8,6 @@
 
 namespace App\Providers;
 
-use App\UIObjects\Skin\SkinSelect;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Skin\SkinHandler;
 use Xpressengine\Skin\SkinInstanceStore;

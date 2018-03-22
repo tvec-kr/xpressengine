@@ -4,7 +4,6 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Editor\AbstractEditor;
 use Xpressengine\Editor\EditorHandler;
-use Xpressengine\Editor\Textarea;
 use Xpressengine\Media\Models\Media;
 use Xpressengine\Permission\Grant;
 

@@ -16,7 +16,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Document\ConfigHandler;
-use Xpressengine\Document\DatabaseProxy;
 use Xpressengine\Document\DocumentHandler;
 use Xpressengine\Document\InstanceManager;
 use Xpressengine\Document\Models\Document;

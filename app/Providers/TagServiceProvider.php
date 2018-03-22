@@ -16,7 +16,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Tag\SimpleDecomposer;
-use Xpressengine\Tag\Tag;
 use Xpressengine\Tag\TagHandler;
 use Xpressengine\Tag\TagRepository;
 
