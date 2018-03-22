@@ -31,6 +31,9 @@ trait EloquentRepositoryTrait
      */
     protected static $models = [];
 
+    /**
+     * EloquentRepositoryTrait constructor.
+     */
     public function __construct()
     {
         if (property_exists($this, 'model')) {

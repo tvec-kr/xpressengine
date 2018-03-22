@@ -44,11 +44,6 @@ class StorageServiceProvider extends ServiceProvider
         });
         File::setUrlMaker($this->app['xe.storage.url']);
 
-        $this->app->resolving('xe.storage', function () {
-            FileRepository::setModel(File::class);
-        });
-
-
         $this->hooks();
     }
 

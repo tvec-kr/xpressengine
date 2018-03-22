@@ -33,6 +33,13 @@ class MenuRepository
     use CacheableEloquentRepositoryTrait;
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Menu::class;
+
+    /**
      * Namespace for cache
      *
      * @var string

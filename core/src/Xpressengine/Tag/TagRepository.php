@@ -35,6 +35,13 @@ class TagRepository
     use EloquentRepositoryTrait;
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Tag::class;
+
+    /**
      * Attach tag to taggable
      *
      * @param string $taggableId taggable id

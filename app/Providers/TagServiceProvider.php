@@ -35,9 +35,6 @@ class TagServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('xe.tag', function () {
-            TagRepository::setModel(Tag::class);
-        });
     }
 
     /**

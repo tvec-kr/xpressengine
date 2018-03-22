@@ -30,6 +30,13 @@ use Xpressengine\Media\Models\Media;
 class ImageRepository extends MediaRepository
 {
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Image::class;
+
+    /**
      * Get a thumbnail image
      *
      * @param Media  $media       media instance

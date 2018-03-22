@@ -34,6 +34,13 @@ class UserGroupRepository implements UserGroupRepositoryInterface
     use EloquentRepositoryTrait;
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = UserGroup::class;
+
+    /**
      * delete
      *
      * @param UserGroup $group group

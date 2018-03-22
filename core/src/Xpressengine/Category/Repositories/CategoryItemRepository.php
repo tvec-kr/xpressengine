@@ -35,6 +35,13 @@ class CategoryItemRepository
     }
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = CategoryItem::class;
+
+    /**
      * Event dispatcher instance
      *
      * @var Dispatcher

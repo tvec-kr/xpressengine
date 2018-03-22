@@ -37,15 +37,11 @@ class CategoryServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->resolving('xe.category', function ($instance, $app) {
-            CategoryItemRepository::setCategoryModelProvider(function () {
-                return CategoryRepository::getModel();
-            });
-            CategoryRepository::setModel(Category::class);
-            CategoryItemRepository::setModel(CategoryItem::class);
-
-            $app['events']->subscribe(EventListener::class);
+        CategoryItemRepository::setCategoryModelProvider(function () {
+            return CategoryRepository::getModel();
         });
+
+        $this->app['events']->subscribe(EventListener::class);
 
     }
 

@@ -36,6 +36,13 @@ class MenuItemRepository
     }
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = MenuItem::class;
+
+    /**
      * Namespace for cache
      *
      * @var string

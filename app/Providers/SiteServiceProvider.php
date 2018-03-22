@@ -35,7 +35,7 @@ class SiteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        SiteRepository::setModel(Site::class);
+//        SiteRepository::setModel(Site::class);
 
         $site = null;
         if ($this->app->runningInConsole() === false) {

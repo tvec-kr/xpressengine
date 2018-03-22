@@ -15,6 +15,7 @@
 
 namespace Xpressengine\Category\Repositories;
 
+use Xpressengine\Category\Models\Category;
 use Xpressengine\Support\EloquentRepositoryTrait;
 
 /**
@@ -30,4 +31,11 @@ use Xpressengine\Support\EloquentRepositoryTrait;
 class CategoryRepository
 {
     use EloquentRepositoryTrait;
+
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Category::class;
 }

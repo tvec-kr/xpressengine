@@ -55,8 +55,6 @@ class MenuServiceProvider extends ServiceProvider
             MenuItemRepository::setMenuModelProvider(function () {
                 return MenuRepository::getModel();
             });
-            MenuRepository::setModel(Menu::class);
-            MenuItemRepository::setModel(MenuItem::class);
 //        });
 
         $this->app['events']->subscribe(EventListener::class);

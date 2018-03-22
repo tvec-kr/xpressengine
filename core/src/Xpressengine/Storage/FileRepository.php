@@ -33,6 +33,13 @@ class FileRepository
     use EloquentRepositoryTrait;
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = File::class;
+
+    /**
      * Save a new file model and return the instance.
      *
      * @param array       $data attributes

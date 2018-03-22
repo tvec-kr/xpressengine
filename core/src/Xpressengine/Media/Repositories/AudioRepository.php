@@ -14,6 +14,8 @@
 
 namespace Xpressengine\Media\Repositories;
 
+use Xpressengine\Media\Models\Audio;
+
 /**
  * Class AudioRepository
  *
@@ -26,5 +28,10 @@ namespace Xpressengine\Media\Repositories;
  */
 class AudioRepository extends MediaRepository
 {
-
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Audio::class;
 }

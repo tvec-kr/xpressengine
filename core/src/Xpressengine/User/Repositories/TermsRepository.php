@@ -15,6 +15,7 @@
 namespace Xpressengine\User\Repositories;
 
 use Xpressengine\Support\EloquentRepositoryTrait;
+use Xpressengine\User\Models\Term;
 
 /**
  * Class TermsRepository
@@ -29,6 +30,13 @@ use Xpressengine\Support\EloquentRepositoryTrait;
 class TermsRepository
 {
     use EloquentRepositoryTrait;
+
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Term::class;
 
     /**
      * Return all terms

@@ -15,6 +15,7 @@
 namespace Xpressengine\User\Repositories;
 
 use Xpressengine\Support\EloquentRepositoryTrait;
+use Xpressengine\User\Models\User;
 use Xpressengine\User\UserInterface;
 
 /**
@@ -30,6 +31,13 @@ use Xpressengine\User\UserInterface;
 class UserRepository implements UserRepositoryInterface
 {
     use EloquentRepositoryTrait;
+
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
     /**
      * create

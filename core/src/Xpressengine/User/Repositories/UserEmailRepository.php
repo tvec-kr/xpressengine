@@ -17,6 +17,7 @@ namespace Xpressengine\User\Repositories;
 use Xpressengine\Support\EloquentRepositoryTrait;
 use Xpressengine\User\EmailInterface;
 use Xpressengine\User\Exceptions\CannotDeleteMainEmailOfUserException;
+use Xpressengine\User\Models\UserEmail;
 use Xpressengine\User\UserInterface;
 
 /**
@@ -32,6 +33,13 @@ use Xpressengine\User\UserInterface;
 class UserEmailRepository implements UserEmailRepositoryInterface
 {
     use EloquentRepositoryTrait;
+
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = UserEmail::class;
 
     /**
      * create

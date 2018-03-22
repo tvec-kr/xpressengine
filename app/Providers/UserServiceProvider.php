@@ -120,7 +120,6 @@ class UserServiceProvider extends ServiceProvider
         });
 
         $this->app->resolving('xe.user', function () {
-            $this->setModels();
             UserHandler::setContainer($this->app['xe.register']);
             $this->addRegisterFormParts();
             $this->addUserSettingSection();
@@ -309,16 +308,6 @@ class UserServiceProvider extends ServiceProvider
             return new RegisterTokenRepository($connection, $keygen, $table, $expire);
         });
         $this->app->alias(RegisterTokenRepository::class, 'xe.user.register.tokens');
-    }
-
-    private function setModels()
-    {
-        UserRepository::setModel(User::class);
-        UserAccountRepository::setModel(UserAccount::class);
-        UserGroupRepository::setModel(UserGroup::class);
-        UserEmailRepository::setModel(UserEmail::class);
-        PendingEmailRepository::setModel(PendingEmail::class);
-        TermsRepository::setModel(Term::class);
     }
 
     /**

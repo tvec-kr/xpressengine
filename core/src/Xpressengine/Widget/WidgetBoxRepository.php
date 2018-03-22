@@ -14,6 +14,7 @@
 namespace Xpressengine\Widget;
 
 use Xpressengine\Support\EloquentRepositoryTrait;
+use Xpressengine\Widget\Models\WidgetBox;
 
 /**
  * @category    Widget
@@ -26,4 +27,11 @@ use Xpressengine\Support\EloquentRepositoryTrait;
 class WidgetBoxRepository
 {
     use EloquentRepositoryTrait;
+
+    /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = WidgetBox::class;
 }

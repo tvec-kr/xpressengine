@@ -84,8 +84,6 @@ class WidgetServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->resolving('xe.widgetbox', function () {
-            WidgetBoxRepository::setModel(WidgetBox::class);
-
             AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {
                 return $this->app['xe.widget']->generateCode($widgetId, $inputs);
             });

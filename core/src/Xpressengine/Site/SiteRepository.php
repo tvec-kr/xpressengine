@@ -33,6 +33,13 @@ class SiteRepository
     use EloquentRepositoryTrait;
 
     /**
+     * The model name for the repository
+     *
+     * @var string
+     */
+    protected $model = Site::class;
+
+    /**
      * Create a new site model object
      *
      * @param array $attributes attributes
