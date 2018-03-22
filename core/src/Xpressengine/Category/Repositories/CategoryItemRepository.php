@@ -31,6 +31,7 @@ use Xpressengine\Support\EloquentRepositoryTrait;
 class CategoryItemRepository
 {
     use EloquentRepositoryTrait {
+        __construct as construct;
         delete as traitDelete;
     }
 
@@ -62,6 +63,8 @@ class CategoryItemRepository
      */
     public function __construct(Dispatcher $dispatcher)
     {
+        $this->construct();
+
         $this->dispatcher = $dispatcher;
     }
 

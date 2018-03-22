@@ -32,6 +32,7 @@ use Xpressengine\Support\CacheableEloquentRepositoryTrait;
 class MenuItemRepository
 {
     use CacheableEloquentRepositoryTrait {
+        __construct as construct;
         delete as traitDelete;
     }
 
@@ -85,6 +86,8 @@ class MenuItemRepository
      */
     public function __construct(IdentifierGenerator $generator, Dispatcher $dispatcher)
     {
+        $this->construct();
+
         $this->generator = $generator;
         $this->dispatcher = $dispatcher;
     }

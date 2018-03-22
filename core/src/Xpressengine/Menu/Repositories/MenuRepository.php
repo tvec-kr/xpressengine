@@ -30,7 +30,9 @@ use Xpressengine\Support\CacheableEloquentRepositoryTrait;
  */
 class MenuRepository
 {
-    use CacheableEloquentRepositoryTrait;
+    use CacheableEloquentRepositoryTrait {
+        __construct as construct;
+    }
 
     /**
      * The model name for the repository
@@ -67,6 +69,8 @@ class MenuRepository
      */
     public function __construct(IdentifierGenerator $generator)
     {
+        $this->construct();
+
         $this->generator = $generator;
     }
 

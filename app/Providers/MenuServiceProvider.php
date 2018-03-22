@@ -19,6 +19,7 @@ use Illuminate\Support\ServiceProvider;
 use Xpressengine\Menu\EventListener;
 use Xpressengine\Menu\MenuHandler;
 use Xpressengine\Menu\MenuItemPolicy;
+use Xpressengine\Menu\Models\Menu;
 use Xpressengine\Menu\Models\MenuItem;
 use Xpressengine\Menu\ModuleHandler;
 use Xpressengine\Menu\Repositories\IdentifierGenerator;
@@ -48,7 +49,7 @@ class MenuServiceProvider extends ServiceProvider
         // @todo route 처리과정에서 xe.menu 를 통하지 않고 메뉴를 사용하는지 점검
 //        $this->app->resolving('xe.menu', function () {
             MenuItemRepository::setMenuModelProvider(function () {
-                return MenuRepository::getModel();
+                return MenuRepository::getModel() ?: Menu::class;
             });
 //        });
 
