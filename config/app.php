@@ -193,8 +193,8 @@ return [
         App\Providers\EditorServiceProvider::class,
         App\Providers\SettingsServiceProvider::class,
         App\Providers\RegisterServiceProvider::class,
-        App\Providers\RoutingServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
+        App\Providers\RoutingServiceProvider::class,
         App\Providers\ConfigServiceProvider::class,
         App\Providers\DocumentServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
@@ -298,6 +298,7 @@ return [
         'XeMedia' => App\Facades\XeMedia::class,
         'XeLang' => App\Facades\XeLang::class,
         'XeSEO' => App\Facades\XeSEO::class,
+        'XeCaptcha' => App\Facades\XeCaptcha::class,
     ],
 
 ];

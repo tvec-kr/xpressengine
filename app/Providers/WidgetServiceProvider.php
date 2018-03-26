@@ -32,6 +32,11 @@ class WidgetServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        WidgetBoxHandler::setContainer($this->app['xe.register']);
+
+        AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {
+            return $this->app['xe.widget']->generateCode($widgetId, $inputs);
+        });
     }
 
     /**
@@ -82,11 +87,6 @@ class WidgetServiceProvider extends ServiceProvider
     protected function resolving()
     {
         $this->app->resolving('xe.widgetbox', function () {
-            AbstractPresenter::setWidgetCodeGenerator(function ($widgetId, array $inputs) {
-                return $this->app['xe.widget']->generateCode($widgetId, $inputs);
-            });
-
-            WidgetBoxHandler::setContainer($this->app['xe.register']);
             WidgetBoxHandler::addPresenter(BootstrapPresenter::class);
             WidgetBoxHandler::addPresenter(XEUIPresenter::class);
         });

@@ -17,6 +17,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Category\CategoryHandler;
 use Xpressengine\Category\EventListener;
+use Xpressengine\Category\Models\Category;
 use Xpressengine\Category\Repositories\CategoryItemRepository;
 use Xpressengine\Category\Repositories\CategoryRepository;
 
@@ -36,11 +37,10 @@ class CategoryServiceProvider extends ServiceProvider
     public function boot()
     {
         CategoryItemRepository::setCategoryModelProvider(function () {
-            return CategoryRepository::getModel();
+            return CategoryRepository::getModel() ?: Category::class;
         });
 
         $this->app['events']->subscribe(EventListener::class);
-
     }
 
     /**

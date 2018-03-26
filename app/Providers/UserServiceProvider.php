@@ -83,6 +83,13 @@ class UserServiceProvider extends ServiceProvider
 
         // register admin middleware
         $this->app['router']->aliasMiddleware('admin', Admin::class);
+
+        UserHandler::setContainer($this->app['xe.register']);
+
+        RegisterFormPart::setSkinResolver(function ($key) {
+            return $this->app['xe.skin']->getAssigned($key);
+        });
+        RegisterFormPart::setContainer($this->app);
     }
 
     /**
@@ -122,7 +129,6 @@ class UserServiceProvider extends ServiceProvider
         });
 
         $this->app->resolving('xe.user', function () {
-            UserHandler::setContainer($this->app['xe.register']);
             $this->addRegisterFormParts();
             $this->addUserSettingSection();
         });
@@ -517,9 +523,6 @@ class UserServiceProvider extends ServiceProvider
 
     protected function addRegisterFormParts()
     {
-        RegisterFormPart::setSkinResolver($this->app['xe.skin']);
-        RegisterFormPart::setContainer($this->app);
-
         UserHandler::addRegisterPart(EmailVerifyPart::class);
         UserHandler::addRegisterPart(DefaultPart::class);
         UserHandler::addRegisterPart(DynamicFieldPart::class);

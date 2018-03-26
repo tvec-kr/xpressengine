@@ -46,12 +46,9 @@ class MenuServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate)
     {
-        // @todo route 처리과정에서 xe.menu 를 통하지 않고 메뉴를 사용하는지 점검
-//        $this->app->resolving('xe.menu', function () {
-            MenuItemRepository::setMenuModelProvider(function () {
-                return MenuRepository::getModel() ?: Menu::class;
-            });
-//        });
+        MenuItemRepository::setMenuModelProvider(function () {
+            return MenuRepository::getModel() ?: Menu::class;
+        });
 
         $this->app['events']->subscribe(EventListener::class);
 

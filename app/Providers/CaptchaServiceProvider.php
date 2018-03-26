@@ -16,7 +16,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Xpressengine\Captcha\CaptchaManager;
-use App\UIObjects\Captcha\CaptchaUIObject;
 
 /**
  * laravel 에서 사용하기위해 등록처리를 하는 class
@@ -33,7 +32,6 @@ class CaptchaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        CaptchaUIObject::setManager($this->app['xe.captcha']);
     }
 
     /**

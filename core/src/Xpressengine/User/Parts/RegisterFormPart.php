@@ -67,7 +67,7 @@ abstract class RegisterFormPart
     /**
      * The skin resolver
      *
-     * @var \Xpressengine\Skin\SkinHandler
+     * @var callable
      */
     protected static $resolver;
 
@@ -205,16 +205,16 @@ abstract class RegisterFormPart
      */
     public static function resolveSkin($key)
     {
-        return static::$resolver->getAssigned($key);
+        return call_user_func(static::$resolver, $key);
     }
 
     /**
      * Set the skin resolver instance
      *
-     * @param \Xpressengine\Skin\SkinHandler $resolver resolver
+     * @param callable $resolver resolver
      * @return void
      */
-    public static function setSkinResolver($resolver)
+    public static function setSkinResolver(callable $resolver)
     {
         static::$resolver = $resolver;
     }
@@ -222,7 +222,7 @@ abstract class RegisterFormPart
     /**
      * Get the skin resolver instance
      *
-     * @return \Xpressengine\Skin\SkinHandler
+     * @return callable
      */
     public static function getSkinResolver()
     {

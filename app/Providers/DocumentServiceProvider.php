@@ -64,6 +64,9 @@ class DocumentServiceProvider extends ServiceProvider
             }
             XeDocument::removeDivision($model);
         });
+
+        // set reply code length config to Document model
+        Document::setReplyCharLen($this->app['config']['xe.documentReplyCodeLen']);
     }
 
     /**
@@ -73,22 +76,17 @@ class DocumentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $app = $this->app;
-
-        // set reply code length config to Document model
-        Document::setReplyCharLen($app['config']['xe.documentReplyCodeLen']);
-
-        $app->singleton('xe.document.config', function ($app) {
+        $this->app->singleton('xe.document.config', function ($app) {
             return new ConfigHandler($app['xe.config']);
         });
-        $app->singleton('xe.document.instance', function ($app) {
+        $this->app->singleton('xe.document.instance', function ($app) {
             $instanceManagerClass = $app['xe.interception']->proxy(InstanceManager::class, 'DocumentInstanceManager');
             return new $instanceManagerClass(
                 $app['xe.db']->connection('document'),
                 $app['xe.document.config']
             );
         });
-        $app->singleton(DocumentHandler::class, function ($app) {
+        $this->app->singleton(DocumentHandler::class, function ($app) {
             $documentHandlerClass = $app['xe.interception']->proxy(DocumentHandler::class, 'Document');
             $document = new $documentHandlerClass(
                 $app['xe.db']->connection('document'),
@@ -99,6 +97,6 @@ class DocumentServiceProvider extends ServiceProvider
 
             return $document;
         });
-        $app->alias(DocumentHandler::class, 'xe.document');
+        $this->app->alias(DocumentHandler::class, 'xe.document');
     }
 }
